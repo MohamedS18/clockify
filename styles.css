@@ -1,4 +1,6 @@
 :root {
+  --app-gray: #f2f6f8;
+  --app-dark-gray: rgb(228, 234, 238);
   font-family:
     Roboto,
     -apple-system,
@@ -16,69 +18,111 @@
 }
 
 body {
+  padding-top: 4rem;
   margin: 0rem;
+  background-color: var(--app-gray);
 }
 
 .header {
-	border-bottom:0.1rem solid rgb(225, 233, 239);
-	display: flex;
-	justify-content: space-between;
-	height: 4rem;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  background-color: white;
+  z-index: 1;
+  border-bottom: 0.1rem solid rgb(225, 233, 239);
+  display: flex;
+  justify-content: space-between;
+  height: 4rem;
 }
 
 .header__dashed--border {
-	height: 60%;
-	border-right:0.01rem dashed rgb(195, 195, 195) ;
+  height: 60%;
+  border-right: 0.01rem dashed rgb(195, 195, 195);
 }
 
 .header__left {
-	margin-left: 0.7rem;
-	align-items: center;
-	width: 30%;
-	justify-content: space-around;
-	display: flex;
+  margin-left: 0.7rem;
+  align-items: center;
+  width: 30%;
+  justify-content: space-around;
+  display: flex;
 }
 
 .header__left--menu {
-
-	height: 1rem;
-	display: flex;
+  height: 1rem;
+  display: flex;
 }
 
 .header__left--logo {
-	height: 2rem;
-	display: flex;
-	align-items: center;
+  height: 2rem;
+  display: flex;
+  align-items: center;
 }
 
 .header__left--button {
-	height: 2rem;
-	border-radius: 0.1rem;
-	border: 0.1rem solid rgb(3, 143, 206);
-	background-color: rgb(3, 169, 244);
+  height: 2rem;
+  border-radius: 0.1rem;
+  border: 0.1rem solid rgb(3, 143, 206);
+  background-color: rgb(3, 169, 244);
 }
 
 .header__right {
-	align-items: center;
-	display: flex;
-	justify-content: space-around;
-	width: 20%;
+  align-items: center;
+  display: flex;
+  justify-content: space-around;
+  width: 20%;
 }
 
 .header__right--item {
-	height: 100%;
-	display: flex;
-	align-items: center;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.header__right--profile {
+  background-color: green;
+  height: 2rem;
+  color: white;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 2rem;
+  border-radius: 0.3rem;
 }
 
 .navbar {
+  border-right: 0.1rem solid rgb(225, 233, 239);
   display: flex;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  position: absolute;
+  left: 0;
+  /* height: 100%; */
+  background-color: white;
+}
+
+.navbar__minimise {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  background-color: #dadada;
+  border-radius: 0.1rem;
+  justify-content: center;
+  top: 40%;
+  right: -0.5rem;
+  width: 2rem;
+  height: 2rem;
+}
+
+.navbar__container {
+  display: flex;
+  position: relative;
   flex-direction: column;
   justify-content: start;
-
   width: 13rem;
-	border: solid;
-  height: 100%;
+  /* height: 100%; */
 }
 
 .navbar__section {
@@ -86,23 +130,29 @@ body {
   flex-direction: column;
 }
 
-.navbar__section--title{
-	display: flex;
-	align-items: center;
-	padding: 0.4rem 1.3rem;
-	color: #999;
-	font-size: 0.9rem;
+.navbar__section--title {
+  display: flex;
+  align-items: center;
+  padding: 0.4rem 1.3rem;
+  color: #999;
+  font-size: 0.9rem;
 }
 
 .navbar__section--item {
   height: 3.5rem;
-	justify-content: start;
+  justify-content: start;
   display: flex;
   padding: 0.2rem;
+  transition: 0.5s linear;
+}
+
+.navbar__section--item:hover {
+  background-color: var(--app-dark-gray);
+  cursor: pointer;
 }
 
 .navbar__item--image {
-	margin: 0rem 1rem;
+  margin: 0rem 1rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -112,4 +162,208 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.navbar__item--showmore {
+  display: flex;
+  justify-content: center;
+  color: #999;
+  align-items: center;
+}
+
+.navbar__section--showmore {
+  height: 30rem;
+}
+
+.main {
+  margin-left: 13.5rem;
+  margin-top: 6rem;
+  margin-right: 1rem;
+}
+
+.main__input {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  top: 5rem;
+  right: 1rem;
+  width: 82%;
+  background-color: white;
+}
+
+.main__input--task {
+  width: 50%;
+  height: 2rem;
+}
+
+.main__input--right {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 45%;
+}
+
+.main__input--right.manual {
+  width: 30%;
+}
+
+.main__input--task.manual {
+  width: 40%;
+}
+
+.main__input--icon {
+  /* margin: 0rem 1rem; */
+}
+
+.main__input--time {
+  height: 2rem;
+  width: 3rem;
+}
+
+.main__task--time {
+   height: 2rem;
+  width: 3rem;
+}
+
+.main__input--startbutton {
+  height: 2rem;
+  border-radius: 0.1rem;
+  border: 0.1rem solid rgb(3, 143, 206);
+  background-color: rgb(3, 169, 244);
+}
+
+.main__input--stopbutton {
+  background-color: red;
+}
+
+.main__dashed--border {
+  height: 2rem;
+  border-right: 0.01rem dashed rgb(195, 195, 195);
+}
+
+.main__input--manual {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+
+.main__task--datecontainer {
+  display: flex;
+  justify-content: space-around;
+  width: 20rem;
+  align-items: center;
+}
+
+.main__input--datecontainer {
+  display: flex;
+  justify-content: space-around;
+  width: 15rem;
+  align-items: center;
+}
+
+.main__input--datecontainer.manual {
+  display: none;
+}
+
+.main__input--manualbutton,
+.main__input--timerbutton {
+  background-color: white;
+  border: none;
+}
+
+.main__week {
+  padding: 1rem;
+}
+
+.main__week--title {
+  margin-bottom: 0.3rem;
+}
+
+.main__task {
+  border-right: 0.1rem solid var(--app-dark-gray);
+  border-left: 0.1rem solid var(--app-dark-gray);
+  background-color: white;
+  padding: 0.4rem;
+  height: 3rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.main__task--left {
+  display: flex;
+}
+
+.main__task--input {
+  width: 10rem;
+}
+
+.main__task--right {
+  display: flex;
+  width: 50%;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.main__task--count {
+  height: 1rem;
+  width: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: aqua;
+  margin-top: 1rem;
+   margin-right: 1rem;
+   cursor: pointer;
+}
+
+.main__day {
+  margin: 1rem 0rem;
+}
+
+.main__day--title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.4rem 0.3rem;
+  background-color: var(--app-dark-gray);
+}
+
+.main__day--bottom {
+  height: 0.4rem;
+  background-color: var(--app-dark-gray);
+}
+
+.main__input--date, .main__task--date {
+  width: 1rem;
+}
+
+.main__task--morecontainer {
+  display: none;
+}
+
+.main__task--morecontainer.show {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  position: absolute;
+  left:-3.8rem;
+  background-color: white;
+  height: 7rem;
+  width: 5rem;
+  z-index:1
+}
+
+.subtask {
+  background-color: rgb(233, 248, 255);
+}
+
+.main__task--moreicon{
+  position: relative;;
 }
