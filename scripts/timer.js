@@ -3,6 +3,7 @@ import { loadData } from "./script.js";
 
 export let isTimer = true;
 let isTimerOn = null;
+let timerInterval = null;
 
 document
   .querySelector(".main__input--startbutton")
@@ -28,14 +29,16 @@ function choose() {
 function startTimer() {
   if (isTimerOn != null) {
     const timeDiff = Date.now() - isTimerOn;
-    console.log(formatDurationFromMillis(timeDiff));
+    console.log(timerInterval);
+    clearInterval(timerInterval);
     document.querySelector(".main__input--stopwatch").textContent = "00:00:00";
     document
       .querySelector(".main__input--startbutton")
       .classList.remove("main__input--stopbutton");
     addTaskTimer();
+    // document.querySelector(".main__input--stopwatch").textContent = "00:00:00";
   } else {
-    setInterval(() => {
+    timerInterval = setInterval(() => {
       document.querySelector(".main__input--stopwatch").textContent =
         formatDurationFromMillis(Date.now() - isTimerOn);
     }, 1000);
@@ -47,7 +50,7 @@ function startTimer() {
 }
 
 function addTaskTimer() {
-  const timeInSeconds =Math.round((Date.now() - isTimerOn) / 1000);
+  const timeInSeconds = Math.round((Date.now() - isTimerOn) / 1000);
   const taskNameInput = document.querySelector(".main__input--task");
   const date = new Date().toISOString().split("T")[0];
   const weekStart = getWeekStartSunday(date);
@@ -62,7 +65,7 @@ function addTaskTimer() {
     duration: formatDuration(timeInSeconds),
   };
 
-  console.log(taskObject)
+  console.log(taskObject);
 
   if (!data[weekStart]) data[weekStart] = {};
   if (!data[weekStart][taskName]) data[weekStart][taskName] = [];

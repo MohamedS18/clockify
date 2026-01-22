@@ -69,3 +69,9 @@ export const data = {
     ]
   }
 };
+
+// localStorage.setItem("value", JSON.stringify(data));
+
+export function getData() {
+  return JSON.parse(localStorage.getItem("value"));
+}

@@ -1,3 +1,7 @@
+import { data } from "./data.js";
+import { loadData } from "./script.js";
+import { getWeekStartSunday } from "./timer.js";
+
 document.querySelector(".navbar__showmore").addEventListener("click", showMore);
 document
   .querySelector(".main__input--manualbutton")
@@ -14,10 +18,19 @@ document.querySelectorAll(".main__task--moreicon").forEach((icon) => {
   icon.addEventListener("click", showDelete);
 });
 
-document
-  .querySelector(".main__input")
-  .addEventListener("click", removeAllCustomStyle);
+document.addEventListener("click", () => {
+  document
+    .querySelectorAll(".main__task--morecontainer.show")
+    .forEach((menu) => menu.classList.remove("show"));
+});
 
+document.querySelectorAll(".main__task--deletebutton").forEach((icon) => {
+  icon.addEventListener("click", deleteTask);
+});
+
+document.querySelectorAll(".main__task--duplicatebutton").forEach((icon) => {
+  icon.addEventListener("click", duplicateTask);
+});
 
 let toShowMore = false;
 enableTimer();
@@ -105,11 +118,101 @@ function showDate() {
   output.textContent = `${month}/${day}/${year}`;
 }
 
-function showDelete() {
-  document.querySelector(".main__task--morecontainer").classList.add("show");
+function showDelete(e) {
+  e.stopPropagation();
+  const menu = e.currentTarget.querySelector(".main__task--morecontainer");
+  menu.classList.add("show");
 }
 
-function removeAllCustomStyle() {
-  document.querySelector(".main__task--morecontainer").classList.remove("show");
+function deleteTask(e) {
+  const dataset = e.currentTarget.dataset;
+
+  if (dataset.date) {
+    const weekStart = getWeekStartSunday(e.currentTarget.dataset.date);
+
+    data[weekStart][dataset.id] = data[weekStart][dataset.id].filter((item) => {
+      return item.date !== dataset.date;
+    });
+    // console.log(data[weekStart][dataset.id]);
+  } else {
+    // console.log(data)
+    for (const week in data) {
+      for (const task in data[week]) {
+        data[week][task] = data[week][task].filter(
+          (item) => item.id != dataset.id,
+        );
+      }
+    }
+  }
+  loadData();
+
+  document.querySelectorAll(".main__task--moreicon").forEach((icon) => {
+    icon.addEventListener("click", showDelete);
+  });
+
+  document.addEventListener("click", () => {
+    document
+      .querySelectorAll(".main__task--morecontainer.show")
+      .forEach((menu) => menu.classList.remove("show"));
+  });
+
+  document.querySelectorAll(".main__task--deletebutton").forEach((icon) => {
+    icon.addEventListener("click", deleteTask);
+  });
+
+  document.querySelectorAll(".main__task--duplicatebutton").forEach((icon) => {
+    icon.addEventListener("click", duplicateTask);
+  });
 }
 
+function duplicateTask(e) {
+  const dataset = e.currentTarget.dataset;
+  let dataToDuplicate = null;
+  let taskName = null;
+
+  if (dataset.date) {
+    const weekStart = getWeekStartSunday(e.currentTarget.dataset.date);
+    taskName = dataset.id;
+    data[weekStart][dataset.id].forEach((item) => {
+      if (item.date == dataset.date) {
+        dataToDuplicate = item;
+      }
+    });
+  } else {
+    for (const week in data) {
+      for (const task in data[week]) {
+        data[week][task].forEach((item) => {
+          if (item.id == dataset.id) {
+            taskName = task;
+            dataToDuplicate = item;
+          }
+        });
+      }
+    }
+  }
+  dataToDuplicate = {...dataToDuplicate}
+  dataToDuplicate.id = Date.now();
+  const week = getWeekStartSunday(dataToDuplicate.date);
+  data[week][taskName].push(dataToDuplicate);
+  // console.log(dataToDuplicate);
+
+  loadData();
+
+  document.querySelectorAll(".main__task--moreicon").forEach((icon) => {
+    icon.addEventListener("click", showDelete);
+  });
+
+  document.addEventListener("click", () => {
+    document
+      .querySelectorAll(".main__task--morecontainer.show")
+      .forEach((menu) => menu.classList.remove("show"));
+  });
+
+  document.querySelectorAll(".main__task--deletebutton").forEach((icon) => {
+    icon.addEventListener("click", deleteTask);
+  });
+
+  document.querySelectorAll(".main__task--duplicatebutton").forEach((icon) => {
+    icon.addEventListener("click", duplicateTask);
+  });
+}

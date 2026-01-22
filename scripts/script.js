@@ -3,11 +3,13 @@ import { data } from "./data.js";
 loadData();
 
 export function loadData() {
+  // const data = JSON.parse(localStorage.getItem("value"));
   const container = document.querySelector(".main__tasks");
 
   container.innerHTML = Object.entries(data)
+    .sort(([a], [b]) => new Date(b) - new Date(a))
+
     .map(([weekStart, tasks]) => {
-      // 🔹 Group ALL entries by date
       const days = {};
 
       Object.entries(tasks).forEach(([taskName, entries]) => {
@@ -18,14 +20,13 @@ export function loadData() {
       });
 
       const daysHTML = Object.entries(days)
+        .sort(([a], [b]) => new Date(b) - new Date(a))
         .map(([date, entries]) => {
-          // day total
           const dayTotal = entries.reduce(
             (sum, e) => sum + e.durationSeconds,
             0,
           );
 
-          // 🔹 group by task name INSIDE THE DAY
           const tasksByName = {};
           entries.forEach((e) => {
             if (!tasksByName[e.taskName]) {
@@ -36,7 +37,6 @@ export function loadData() {
 
           const tasksHTML = Object.entries(tasksByName)
             .map(([taskName, taskEntries]) => {
-              // ✅ SINGLE ENTRY → normal task
               if (taskEntries.length === 1) {
                 const t = taskEntries[0];
                 return `
@@ -71,15 +71,14 @@ export function loadData() {
                     src="https://app.clockify.me/assets/ui-icons/menu-dots-vertical.svg"
                   />
                   <div class="main__task--morecontainer">
-                    <button>Duplicate</button>
-                    <button>Delete</button>
+                    <button class="main__task--duplicatebutton" data-id="${t.id}">Duplicate</button>
+                    <button class="main__task--deletebutton"  data-id="${t.id}">Delete</button>
                   </div>
                 </div>
   </div>
 </div>`;
               }
 
-              // ✅ MULTIPLE ENTRIES SAME DAY → parent + subtasks
               const totalSeconds = taskEntries.reduce(
                 (sum, t) => sum + t.durationSeconds,
                 0,
@@ -103,9 +102,9 @@ export function loadData() {
                 <div class="main__input--icon">$</div>
                 <div class="main__dashed--border"></div>
                 <div class="main__task--datecontainer">
-                  <input class="main__task--time" type="text" />
+                  <input class="main__task--time" type="text" value="11:13"/>
                   <div>-</div>
-                  <input class="main__task--time" type="text" />
+                  <input class="main__task--time" type="text" value="11:14"/>
                   <input class="main__task--date" type="date" />
                 </div>
     <div class="main__input--stopwatch">
@@ -120,8 +119,8 @@ export function loadData() {
                     src="https://app.clockify.me/assets/ui-icons/menu-dots-vertical.svg"
                   />
                   <div class="main__task--morecontainer">
-                    <button>Duplicate</button>
-                    <button>Delete</button>
+                    <button class="main__task--duplicatebutton" data-date="${date}" data-id="${taskName}">Duplicate</button>
+                    <button class="main__task--deletebutton" data-date="${date}" data-id="${taskName}">Delete</button>
                   </div>
                 </div>
   </div>
@@ -161,8 +160,8 @@ export function loadData() {
                     src="https://app.clockify.me/assets/ui-icons/menu-dots-vertical.svg"
                   />
                   <div class="main__task--morecontainer">
-                    <button>Duplicate</button>
-                    <button>Delete</button>
+                    <button class="main__task--duplicatebutton" data-id="${t.id}">Duplicate</button>
+                    <button class="main__task--deletebutton" data-id="${t.id}">Delete</button>
                   </div>
                 </div>
   </div>
