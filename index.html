@@ -175,15 +175,3 @@
     <script type="module" src="scripts/timer.js"></script>
   </body>
 </html>
-
-<div class="main__day" data-date="${date}">
-  <div class="main__day--title">
-    <div>${formatDayTitle(date)}</div>
-    <div class="main__day--right">
-      Total: <span class="main__day--totaltime">${secondsToHMS(dayTotal)}</span
-      ><img src="https://app.clockify.me/assets/ui-icons/bulk-edit.svg" />
-    </div>
-  </div>
-  ${tasksHTML}
-  <div class="main__day--bottom"></div>
-</div>

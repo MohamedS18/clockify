@@ -1,4 +1,4 @@
-import { data, getData, saveData } from "./data.js";
+import { getData, saveData } from "./data.js";
 import { refresh } from "./interface.js";
 import { loadData } from "./script.js";
 
@@ -29,8 +29,6 @@ function choose() {
 
 function startTimer() {
   if (isTimerOn != null) {
-    const timeDiff = Date.now() - isTimerOn;
-    console.log(timerInterval);
     clearInterval(timerInterval);
     document.querySelector(".main__input--stopwatch").textContent = "00:00:00";
     document.querySelector(".main__input--startbutton").textContent = "START";

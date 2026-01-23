@@ -1,4 +1,4 @@
-import { data, getData, saveData } from "./data.js";
+import { getData, saveData } from "./data.js";
 import { loadData } from "./script.js";
 import { getWeekStartSunday } from "./timer.js";
 
@@ -154,9 +154,7 @@ function deleteTask(e) {
     data[weekStart][dataset.id] = data[weekStart][dataset.id].filter((item) => {
       return item.date !== dataset.date;
     });
-    console.log(data[weekStart][dataset.id]);
   } else {
-    console.log(data)
     for (const week in data) {
       for (const task in data[week]) {
         data[week][task] = data[week][task].filter(
@@ -176,8 +174,6 @@ function deleteTask(e) {
       delete data[week];
     }
   }
-
-  console.log(data);
 
   saveData(data);
   loadData();
@@ -241,10 +237,8 @@ function duplicateTask(e) {
   dataToDuplicate.id = Date.now();
   const week = getWeekStartSunday(dataToDuplicate.date);
   data[week][taskName].push(dataToDuplicate);
-  console.log(dataToDuplicate);
   saveData(data);
   loadData();
-
   refresh();
 }
 
@@ -310,7 +304,6 @@ function changeDate(e) {
     }
   }
   dataToChange.date = newDate;
-  console.log(dataToChange);
 
   saveData(data);
   loadData();

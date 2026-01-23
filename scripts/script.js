@@ -39,43 +39,59 @@ export function loadData() {
               if (taskEntries.length === 1) {
                 const t = taskEntries[0];
                 return `
-<div class="main__task" data-id="${t.id}">
-  <div class="main__task--left">
-    <input class="main__task--input main--input" value="${taskName}" data-id="${t.id}" />
-  </div>
+                  <div class="main__task" data-id="${t.id}">
+                    <div class="main__task--left">
+                      <input
+                        class="main__task--input main--input"
+                        value="${taskName}"
+                        data-id="${t.id}"
+                      />
+                    </div>
 
-  <div class="main__task--right">
-    <div class="main__dashed--border"></div>
-    <div class="main__input--icon">
-      <img src="https://app.clockify.me/assets/ui-icons/tag-gray.svg" />
-    </div>
-    <div class="main__dashed--border"></div>
-    <div class="main__input--icon">$</div>
-    <div class="main__dashed--border"></div>
+                    <div class="main__task--right">
+                      <div class="main__dashed--border"></div>
+                      <div class="main__input--icon">
+                        <img src="https://app.clockify.me/assets/ui-icons/tag-gray.svg" />
+                      </div>
+                      <div class="main__dashed--border"></div>
+                      <div class="main__input--icon">$</div>
+                      <div class="main__dashed--border"></div>
 
-    <div class="main__task--datecontainer">
-      <input class="main__task--time" value="${t.taskStart}" data-id="${t.id}" />
-      <div>-</div>
-      <input class="main__task--time" value="${t.taskEnd}" data-id="${t.id}" />
-      <input class="main__task--date" type="date" value="${t.date}" data-id="${t.id}" />
-    </div>
+                      <div class="main__task--datecontainer">
+                        <input
+                          class="main__task--time"
+                          value="${t.taskStart}"
+                          data-id="${t.id}"
+                        />
+                        <div>-</div>
+                        <input class="main__task--time" value="${t.taskEnd}" data-id="${t.id}" />
+                        <input
+                          class="main__task--date"
+                          type="date"
+                          value="${t.date}"
+                          data-id="${t.id}"
+                        />
+                      </div>
 
-    <div class="main__input--stopwatch">${t.duration}</div>
+                      <div class="main__input--stopwatch">${t.duration}</div>
 
-    <div class="main__input--icon">
-                  <img src="https://app.clockify.me/assets/ui-icons/play.svg" />
-                </div>
-                <div class="main__task--moreicon">
-                  <img
-                    src="https://app.clockify.me/assets/ui-icons/menu-dots-vertical.svg"
-                  />
-                  <div class="main__task--morecontainer">
-                    <button class="main__task--duplicatebutton" data-id="${t.id}">Duplicate</button>
-                    <button class="main__task--deletebutton"  data-id="${t.id}">Delete</button>
+                      <div class="main__input--icon">
+                        <img src="https://app.clockify.me/assets/ui-icons/play.svg" />
+                      </div>
+                      <div class="main__task--moreicon">
+                        <img src="https://app.clockify.me/assets/ui-icons/menu-dots-vertical.svg" />
+                        <div class="main__task--morecontainer">
+                          <button class="main__task--duplicatebutton" data-id="${t.id}">
+                            Duplicate
+                          </button>
+                          <button class="main__task--deletebutton" data-id="${t.id}">
+                            Delete
+                          </button>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-  </div>
-</div>`;
+                  `;
               }
 
               const totalSeconds = taskEntries.reduce(
@@ -84,87 +100,114 @@ export function loadData() {
               );
 
               const parentHTML = `
-<div class="main__task" data-id="${taskName}">
-  <div class="main__task--left">
-    <span class="main__task--count">${taskEntries.length}</span>
-    <input class="main__task--input main--input" value="${taskName}" data-id="${taskName}" />
-  </div>
-
-  <div class="main__task--right">
-  <div class="main__dashed--border"></div>
-                <div class="main__input--icon">
-                  <img
-                    src="https://app.clockify.me/assets/ui-icons/tag-gray.svg"
+              <div class="main__task" data-id="${taskName}">
+                <div class="main__task--left">
+                  <span class="main__task--count">${taskEntries.length}</span>
+                  <input
+                    class="main__task--input main--input"
+                    value="${taskName}"
+                    data-id="${taskName}"
                   />
                 </div>
-                <div class="main__dashed--border"></div>
-                <div class="main__input--icon">$</div>
-                <div class="main__dashed--border"></div>
-                <div class="main__task--datecontainer">
-                  <input class="main__task--time" type="text" value="11:00"/>
-                  <div>-</div>
-                  <input class="main__task--time" type="text" value="12:00"/>
-                  <input class="main__task--date" type="date" />
-                </div>
-    <div class="main__input--stopwatch">
-      ${secondsToHMS(totalSeconds)}
-    </div>
 
-    <div class="main__input--icon">
-                  <img src="https://app.clockify.me/assets/ui-icons/play.svg" />
-                </div>
-                <div class="main__task--moreicon">
-                  <img
-                    src="https://app.clockify.me/assets/ui-icons/menu-dots-vertical.svg"
-                  />
-                  <div class="main__task--morecontainer">
-                    <button class="main__task--duplicatebutton" data-date="${date}" data-id="${taskName}">Duplicate</button>
-                    <button class="main__task--deletebutton" data-date="${date}" data-id="${taskName}">Delete</button>
+                <div class="main__task--right">
+                  <div class="main__dashed--border"></div>
+                  <div class="main__input--icon">
+                    <img src="https://app.clockify.me/assets/ui-icons/tag-gray.svg" />
+                  </div>
+                  <div class="main__dashed--border"></div>
+                  <div class="main__input--icon">$</div>
+                  <div class="main__dashed--border"></div>
+                  <div class="main__task--datecontainer">
+                    <input class="main__task--time" type="text" value="11:00" />
+                    <div>-</div>
+                    <input class="main__task--time" type="text" value="12:00" />
+                    <input class="main__task--date" type="date" />
+                  </div>
+                  <div class="main__input--stopwatch">${secondsToHMS(totalSeconds)}</div>
+
+                  <div class="main__input--icon">
+                    <img src="https://app.clockify.me/assets/ui-icons/play.svg" />
+                  </div>
+                  <div class="main__task--moreicon">
+                    <img src="https://app.clockify.me/assets/ui-icons/menu-dots-vertical.svg" />
+                    <div class="main__task--morecontainer">
+                      <button
+                        class="main__task--duplicatebutton"
+                        data-date="${date}"
+                        data-id="${taskName}"
+                      >
+                        Duplicate
+                      </button>
+                      <button
+                        class="main__task--deletebutton"
+                        data-date="${date}"
+                        data-id="${taskName}"
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </div>
                 </div>
-  </div>
-</div>`;
+              </div>
+            `;
 
               const subtasksHTML = taskEntries
                 .map(
                   (t) => `
-<div class="main__task subtask" data-id="${t.id}">
-  <div class="main__task--left">
-    <input class="main__task--input main__subtask--input" value="${taskName}" data-id="${t.id}" />
-  </div>
+                          <div class="main__task subtask" data-id="${t.id}">
+                            <div class="main__task--left">
+                              <input
+                                class="main__task--input main__subtask--input"
+                                value="${taskName}"
+                                data-id="${t.id}"
+                              />
+                            </div>
 
-  <div class="main__task--right">
-    <div class="main__dashed--border"></div>
-    <div class="main__input--icon">
-      <img src="https://app.clockify.me/assets/ui-icons/tag-gray.svg" />
-    </div>
-    <div class="main__dashed--border"></div>
-    <div class="main__input--icon">$</div>
-    <div class="main__dashed--border"></div>
+                            <div class="main__task--right">
+                              <div class="main__dashed--border"></div>
+                              <div class="main__input--icon">
+                                <img src="https://app.clockify.me/assets/ui-icons/tag-gray.svg" />
+                              </div>
+                              <div class="main__dashed--border"></div>
+                              <div class="main__input--icon">$</div>
+                              <div class="main__dashed--border"></div>
 
-    <div class="main__task--datecontainer">
-      <input class="main__task--time" value="${t.taskStart}" data-id="${t.id}" />
-      <div>-</div>
-      <input class="main__task--time" value="${t.taskEnd}" data-id="${t.id}" />
-      <input class="main__task--date" type="date" value="${t.date}" data-id="${t.id}" />
-    </div>
+                              <div class="main__task--datecontainer">
+                                <input
+                                  class="main__task--time"
+                                  value="${t.taskStart}"
+                                  data-id="${t.id}"
+                                />
+                                <div>-</div>
+                                <input class="main__task--time" value="${t.taskEnd}" data-id="${t.id}" />
+                                <input
+                                  class="main__task--date"
+                                  type="date"
+                                  value="${t.date}"
+                                  data-id="${t.id}"
+                                />
+                              </div>
 
-    <div class="main__input--stopwatch">${t.duration}</div>
+                              <div class="main__input--stopwatch">${t.duration}</div>
 
-    <div class="main__input--icon">
-                  <img src="https://app.clockify.me/assets/ui-icons/play.svg" />
-                </div>
-                <div class="main__task--moreicon">
-                  <img
-                    src="https://app.clockify.me/assets/ui-icons/menu-dots-vertical.svg"
-                  />
-                  <div class="main__task--morecontainer">
-                    <button class="main__task--duplicatebutton" data-id="${t.id}">Duplicate</button>
-                    <button class="main__task--deletebutton" data-id="${t.id}">Delete</button>
-                  </div>
-                </div>
-  </div>
-</div>`,
+                              <div class="main__input--icon">
+                                <img src="https://app.clockify.me/assets/ui-icons/play.svg" />
+                              </div>
+                              <div class="main__task--moreicon">
+                                <img src="https://app.clockify.me/assets/ui-icons/menu-dots-vertical.svg" />
+                                <div class="main__task--morecontainer">
+                                  <button class="main__task--duplicatebutton" data-id="${t.id}">
+                                    Duplicate
+                                  </button>
+                                  <button class="main__task--deletebutton" data-id="${t.id}">
+                                    Delete
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                                `,
                 )
                 .join("");
 
@@ -173,17 +216,17 @@ export function loadData() {
             .join("");
 
           return `
-<div class="main__day" data-date="${date}">
-  <div class="main__day--title">
-    <div>${formatDayTitle(date)}</div>
-    <div class="main__day--right">Total: <span class="main__day--totaltime">${secondsToHMS(dayTotal)}</span><img src="https://app.clockify.me/assets/ui-icons/bulk-edit.svg"></div>
-
-  </div>
-
-  ${tasksHTML}
-
-  <div class="main__day--bottom"></div>
-</div>`;
+          <div class="main__day" data-date="${date}">
+            <div class="main__day--title">
+              <div>${formatDayTitle(date)}</div>
+              <div class="main__day--right">
+                Total: <span class="main__day--totaltime">${secondsToHMS(dayTotal)}</span>
+                <img src="https://app.clockify.me/assets/ui-icons/bulk-edit.svg" />
+              </div>
+            </div>
+            ${tasksHTML}
+            <div class="main__day--bottom"></div>
+          </div>`;
         })
         .join("");
 
@@ -216,7 +259,6 @@ function formatWeekRange(weekStartStr) {
 }
 
 function formatDayTitle(dateStr) {
-  console.log(new Date().toISOString().slice(0, 10), dateStr);
   if (new Date().toISOString().slice(0, 10) == dateStr) {
     return "Today";
   }
