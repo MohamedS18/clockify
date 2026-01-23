@@ -117,7 +117,7 @@
             <div class="navbar__item--title">TAGS</div>
           </div>
           <div class="navbar__section--item navbar__showmore">
-            <div class="navbar__item--image">
+            <div class="navbar__item--image showmoreimage">
               <img
                 src="https://app.clockify.me/assets/ui-icons/chevron-down.svg"
               />
@@ -127,16 +127,12 @@
         </section>
         <section class="navbar__section--showmore"></section>
       </div>
-      <div class="navbar__minimise">
-        <img
-          src="https://app.clockify.me/assets/ui-icons/sidebar-toggler-union-open.svg"
-        />
-      </div>
+      <div class="navbar__minimise"></div>
     </nav>
     <main class="main">
       <div class="main__input">
         <input
-          class="main__input--task"
+          class="main__input--task main--input"
           type="text"
           placeholder="What are you working on"
         />
@@ -171,100 +167,7 @@
           </div>
         </div>
       </div>
-      <div class="main__tasks">
-        <div class="main__week">
-          <div class="main__week--title">This Week</div>
-          <div class="main__day">
-            <div class="main__day--title">
-              <div>Wed ,dare</div>
-              <div>total: 09:11:01</div>
-            </div>
-            <div class="main__task">
-              <div class="main__task--left">
-                <span class="main__task--count"></span>
-                <input
-                  class="main__task--input"
-                  type="text"
-                  placeholder="What are you working on"
-                />
-              </div>
-
-              <div class="main__task--right">
-                <div class="main__dashed--border"></div>
-                <div class="main__input--icon">
-                  <img
-                    src="https://app.clockify.me/assets/ui-icons/tag-gray.svg"
-                  />
-                </div>
-                <div class="main__dashed--border"></div>
-                <div class="main__input--icon">$</div>
-                <div class="main__dashed--border"></div>
-                <div class="main__task--datecontainer">
-                  <input class="main__task--time" type="text" />
-                  <div>-</div>
-                  <input class="main__task--time" type="text" />
-                  <input class="main__task--date" type="date" />
-                </div>
-                <div class="main__input--stopwatch">00:00:00</div>
-                <div class="main__input--icon">
-                  <img src="https://app.clockify.me/assets/ui-icons/play.svg" />
-                </div>
-                <div class="main__task--moreicon">
-                  <img
-                    src="https://app.clockify.me/assets/ui-icons/menu-dots-vertical.svg"
-                  />
-                  <div class="main__task--morecontainer">
-                    <button>Duplicate</button>
-                    <button>Delete</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="main__task subtask">
-              <div class="main__task--left">
-                <span class="main__task--count"></span>
-                <input
-                  class="main__task--input"
-                  type="text"
-                  placeholder="What are you working on"
-                />
-              </div>
-
-              <div class="main__task--right">
-                <div class="main__dashed--border"></div>
-                <div class="main__input--icon">
-                  <img
-                    src="https://app.clockify.me/assets/ui-icons/tag-gray.svg"
-                  />
-                </div>
-                <div class="main__dashed--border"></div>
-                <div class="main__input--icon">$</div>
-                <div class="main__dashed--border"></div>
-                <div class="main__task--datecontainer">
-                  <input class="main__task--time" type="text" />
-                  <div>-</div>
-                  <input class="main__task--time" type="text" />
-                  <input class="main__task--date" type="date" />
-                </div>
-                <div class="main__input--stopwatch">00:00:00</div>
-                <div class="main__input--icon">
-                  <img src="https://app.clockify.me/assets/ui-icons/play.svg" />
-                </div>
-                <div class="main__task--moreicon">
-                  <img
-                    src="https://app.clockify.me/assets/ui-icons/menu-dots-vertical.svg"
-                  />
-                  <div class="main__task--morecontainer">
-                    <button>Duplicate</button>
-                    <button>Delete</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="main__day--bottom"></div>
-          </div>
-        </div>
-      </div>
+      <div class="main__tasks"></div>
     </main>
     <script type="module" src="scripts/data.js"></script>
     <script type="module" src="scripts/script.js"></script>
@@ -272,3 +175,15 @@
     <script type="module" src="scripts/timer.js"></script>
   </body>
 </html>
+
+<div class="main__day" data-date="${date}">
+  <div class="main__day--title">
+    <div>${formatDayTitle(date)}</div>
+    <div class="main__day--right">
+      Total: <span class="main__day--totaltime">${secondsToHMS(dayTotal)}</span
+      ><img src="https://app.clockify.me/assets/ui-icons/bulk-edit.svg" />
+    </div>
+  </div>
+  ${tasksHTML}
+  <div class="main__day--bottom"></div>
+</div>

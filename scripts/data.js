@@ -75,3 +75,7 @@ export const data = {
 export function getData() {
   return JSON.parse(localStorage.getItem("value"));
 }
+
+export function saveData(data) {
+  localStorage.setItem("value", JSON.stringify(data));
+}

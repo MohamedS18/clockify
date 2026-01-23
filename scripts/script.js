@@ -1,14 +1,13 @@
-import { data } from "./data.js";
+import { getData } from "./data.js";
 
 loadData();
 
 export function loadData() {
-  // const data = JSON.parse(localStorage.getItem("value"));
+  const data = getData();
   const container = document.querySelector(".main__tasks");
 
   container.innerHTML = Object.entries(data)
     .sort(([a], [b]) => new Date(b) - new Date(a))
-
     .map(([weekStart, tasks]) => {
       const days = {};
 
@@ -42,7 +41,7 @@ export function loadData() {
                 return `
 <div class="main__task" data-id="${t.id}">
   <div class="main__task--left">
-    <input class="main__task--input" value="${taskName}" data-id="${t.id}" />
+    <input class="main__task--input main--input" value="${taskName}" data-id="${t.id}" />
   </div>
 
   <div class="main__task--right">
@@ -88,7 +87,7 @@ export function loadData() {
 <div class="main__task" data-id="${taskName}">
   <div class="main__task--left">
     <span class="main__task--count">${taskEntries.length}</span>
-    <input class="main__task--input" value="${taskName}" data-id="${taskName}" />
+    <input class="main__task--input main--input" value="${taskName}" data-id="${taskName}" />
   </div>
 
   <div class="main__task--right">
@@ -102,9 +101,9 @@ export function loadData() {
                 <div class="main__input--icon">$</div>
                 <div class="main__dashed--border"></div>
                 <div class="main__task--datecontainer">
-                  <input class="main__task--time" type="text" value="11:13"/>
+                  <input class="main__task--time" type="text" value="11:00"/>
                   <div>-</div>
-                  <input class="main__task--time" type="text" value="11:14"/>
+                  <input class="main__task--time" type="text" value="12:00"/>
                   <input class="main__task--date" type="date" />
                 </div>
     <div class="main__input--stopwatch">
@@ -131,7 +130,7 @@ export function loadData() {
                   (t) => `
 <div class="main__task subtask" data-id="${t.id}">
   <div class="main__task--left">
-    <input class="main__task--input" value="${taskName}" data-id="${t.id}" />
+    <input class="main__task--input main__subtask--input" value="${taskName}" data-id="${t.id}" />
   </div>
 
   <div class="main__task--right">
@@ -177,7 +176,8 @@ export function loadData() {
 <div class="main__day" data-date="${date}">
   <div class="main__day--title">
     <div>${formatDayTitle(date)}</div>
-    <div>total: ${secondsToHMS(dayTotal)}</div>
+    <div class="main__day--right">Total: <span class="main__day--totaltime">${secondsToHMS(dayTotal)}</span><img src="https://app.clockify.me/assets/ui-icons/bulk-edit.svg"></div>
+
   </div>
 
   ${tasksHTML}
@@ -216,6 +216,10 @@ function formatWeekRange(weekStartStr) {
 }
 
 function formatDayTitle(dateStr) {
+  console.log(new Date().toISOString().slice(0, 10), dateStr);
+  if (new Date().toISOString().slice(0, 10) == dateStr) {
+    return "Today";
+  }
   return new Date(dateStr).toLocaleDateString("en-US", {
     weekday: "short",
     month: "short",

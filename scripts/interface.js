@@ -1,4 +1,4 @@
-import { data } from "./data.js";
+import { data, getData, saveData } from "./data.js";
 import { loadData } from "./script.js";
 import { getWeekStartSunday } from "./timer.js";
 
@@ -32,12 +32,29 @@ document.querySelectorAll(".main__task--duplicatebutton").forEach((icon) => {
   icon.addEventListener("click", duplicateTask);
 });
 
+document.querySelectorAll(".main__task--date").forEach((icon) => {
+  icon.addEventListener("change", changeDate);
+});
+
+document
+  .querySelector(".navbar__minimise")
+  .addEventListener("click", minimiseNavbar);
+
+document.querySelectorAll(".main__task--count").forEach((icon) => {
+  icon.addEventListener("click", showSubTask);
+});
+
 let toShowMore = false;
+let toMinimiseNavbar = false;
+let toShowSubtask = false;
 enableTimer();
 
 function showMore() {
   toShowMore = !toShowMore;
   if (toShowMore) {
+    document.querySelector(".navbar__item--showmore").innerHTML = "SHOW LESS";
+    document.querySelector(".showmoreimage").innerHTML =
+      `<img src="https://app.clockify.me/assets/ui-icons/chevron-up.svg">`;
     document.querySelector(".navbar__section--showmore").innerHTML = `
         <div class="navbar__section--item">
           <div class="navbar__item--image">
@@ -89,6 +106,9 @@ function showMore() {
         </div>
       `;
   } else {
+    document.querySelector(".showmoreimage").innerHTML =
+      `<img src="https://app.clockify.me/assets/ui-icons/chevron-down.svg">`;
+    document.querySelector(".navbar__item--showmore").innerHTML = "SHOW MORE";
     document.querySelector(".navbar__section--showmore").innerHTML = "";
   }
 }
@@ -107,7 +127,7 @@ function enableManualDate() {
     .classList.remove("manual");
 }
 
-function showDate() {
+export function showDate() {
   const dateInput = document.querySelector(".main__input--date");
   const output = document.querySelector(".main__date--show");
   const date = new Date(dateInput.value);
@@ -125,6 +145,7 @@ function showDelete(e) {
 }
 
 function deleteTask(e) {
+  let data = getData();
   const dataset = e.currentTarget.dataset;
 
   if (dataset.date) {
@@ -133,9 +154,9 @@ function deleteTask(e) {
     data[weekStart][dataset.id] = data[weekStart][dataset.id].filter((item) => {
       return item.date !== dataset.date;
     });
-    // console.log(data[weekStart][dataset.id]);
+    console.log(data[weekStart][dataset.id]);
   } else {
-    // console.log(data)
+    console.log(data)
     for (const week in data) {
       for (const task in data[week]) {
         data[week][task] = data[week][task].filter(
@@ -144,8 +165,26 @@ function deleteTask(e) {
       }
     }
   }
-  loadData();
 
+  for (const week in data) {
+    for (const task in data[week]) {
+      if (data[week][task].length == 0) {
+        delete data[week][task];
+      }
+    }
+    if (Object.keys(data[week]).length === 0) {
+      delete data[week];
+    }
+  }
+
+  console.log(data);
+
+  saveData(data);
+  loadData();
+  refresh();
+}
+
+export function refresh() {
   document.querySelectorAll(".main__task--moreicon").forEach((icon) => {
     icon.addEventListener("click", showDelete);
   });
@@ -163,9 +202,17 @@ function deleteTask(e) {
   document.querySelectorAll(".main__task--duplicatebutton").forEach((icon) => {
     icon.addEventListener("click", duplicateTask);
   });
+  document.querySelectorAll(".main__task--count").forEach((icon) => {
+    icon.addEventListener("click", showSubTask);
+  });
+
+  document.querySelectorAll(".main__task--date").forEach((icon) => {
+    icon.addEventListener("change", changeDate);
+  });
 }
 
 function duplicateTask(e) {
+  let data = getData();
   const dataset = e.currentTarget.dataset;
   let dataToDuplicate = null;
   let taskName = null;
@@ -174,7 +221,7 @@ function duplicateTask(e) {
     const weekStart = getWeekStartSunday(e.currentTarget.dataset.date);
     taskName = dataset.id;
     data[weekStart][dataset.id].forEach((item) => {
-      if (item.date == dataset.date) {
+      if (dataToDuplicate == null && item.date == dataset.date) {
         dataToDuplicate = item;
       }
     });
@@ -190,29 +237,82 @@ function duplicateTask(e) {
       }
     }
   }
-  dataToDuplicate = {...dataToDuplicate}
+  dataToDuplicate = { ...dataToDuplicate };
   dataToDuplicate.id = Date.now();
   const week = getWeekStartSunday(dataToDuplicate.date);
   data[week][taskName].push(dataToDuplicate);
-  // console.log(dataToDuplicate);
-
+  console.log(dataToDuplicate);
+  saveData(data);
   loadData();
 
-  document.querySelectorAll(".main__task--moreicon").forEach((icon) => {
-    icon.addEventListener("click", showDelete);
-  });
+  refresh();
+}
 
-  document.addEventListener("click", () => {
+function minimiseNavbar() {
+  toMinimiseNavbar = !toMinimiseNavbar;
+  if (toMinimiseNavbar) {
+    document.querySelectorAll(".navbar__item--title").forEach((elem) => {
+      elem.classList.add("display-none");
+    });
+    document.querySelectorAll(".navbar__section--title").forEach((elem) => {
+      elem.classList.add("display-none");
+    });
     document
-      .querySelectorAll(".main__task--morecontainer.show")
-      .forEach((menu) => menu.classList.remove("show"));
-  });
+      .querySelector(".navbar__item--showmore")
+      .classList.add("display-none");
+    document.querySelector(".navbar").classList.add("minimise");
+    document.querySelector(".navbar__minimise").classList.add("minimise");
+    document.querySelector(".main").classList.add("expand");
+    document.querySelector(".main__input").classList.add("expand");
+  } else {
+    document.querySelectorAll(".navbar__item--title").forEach((elem) => {
+      elem.classList.remove("display-none");
+    });
+    document.querySelectorAll(".navbar__section--title").forEach((elem) => {
+      elem.classList.remove("display-none");
+    });
+    document
+      .querySelector(".navbar__item--showmore")
+      .classList.remove("display-none");
+    document.querySelector(".navbar").classList.remove("minimise");
+    document.querySelector(".navbar__minimise").classList.remove("minimise");
+    document.querySelector(".main").classList.remove("expand");
+    document.querySelector(".main__input").classList.remove("expand");
+  }
+}
 
-  document.querySelectorAll(".main__task--deletebutton").forEach((icon) => {
-    icon.addEventListener("click", deleteTask);
-  });
+function showSubTask() {
+  toShowSubtask = !toShowSubtask;
 
-  document.querySelectorAll(".main__task--duplicatebutton").forEach((icon) => {
-    icon.addEventListener("click", duplicateTask);
-  });
+  if (toShowSubtask) {
+    document.querySelectorAll(".subtask").forEach((elem) => {
+      elem.classList.add("hide");
+    });
+  } else {
+    document.querySelectorAll(".subtask").forEach((elem) => {
+      elem.classList.remove("hide");
+    });
+  }
+}
+
+function changeDate(e) {
+  let dataToChange = null;
+  let data = getData();
+  const { id } = e.currentTarget.dataset;
+  const newDate = e.currentTarget.value;
+  for (const week in data) {
+    for (const task in data[week]) {
+      data[week][task].forEach((item) => {
+        if (item.id == id) {
+          dataToChange = item;
+        }
+      });
+    }
+  }
+  dataToChange.date = newDate;
+  console.log(dataToChange);
+
+  saveData(data);
+  loadData();
+  refresh();
 }
