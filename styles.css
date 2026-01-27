@@ -1,0 +1,548 @@
+:root {
+  --app-gray: #f2f6f8;
+  --app-dark-gray: rgb(228, 234, 238);
+  font-family:
+    Roboto,
+    -apple-system,
+    BlinkMacSystemFont,
+    Segoe UI,
+    Roboto,
+    Helvetica Neue,
+    Arial,
+    Noto Sans,
+    sans-serif,
+    "Apple Color Emoji",
+    "Segoe UI Emoji",
+    Segoe UI Symbol,
+    "Noto Color Emoji";
+}
+
+body {
+  padding-top: 4rem;
+  margin: 0rem;
+  background-color: var(--app-gray);
+}
+
+.header {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  background-color: white;
+  z-index: 2;
+  border-bottom: 0.1rem solid rgb(225, 233, 239);
+  display: flex;
+  justify-content: space-between;
+  height: 4rem;
+}
+
+.header__dashed--border {
+  height: 60%;
+  border-right: 0.01rem dashed rgb(195, 195, 195);
+}
+
+.header__left {
+  margin-left: 0.7rem;
+  align-items: center;
+  width: 30%;
+  justify-content: space-around;
+  display: flex;
+}
+
+.header__left--menu {
+  height: 1rem;
+  display: flex;
+}
+
+.header__left--logo {
+  height: 2rem;
+  display: flex;
+  align-items: center;
+}
+
+.header__left--button {
+  height: 2rem;
+  border-radius: 0.1rem;
+  border: 0.1rem solid rgb(3, 143, 206);
+  background-color: rgb(3, 169, 244);
+}
+
+.header__right {
+  align-items: center;
+  display: flex;
+  justify-content: space-around;
+  width: 20%;
+}
+
+.header__right--item {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.header__right--profile {
+  background-color: green;
+  height: 2rem;
+  color: white;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 2rem;
+  border-radius: 0.3rem;
+}
+
+.navbar {
+  border-right: 0.1rem solid rgb(225, 233, 239);
+  display: flex;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  position: fixed;
+  width: 13rem;
+  left: 0;
+  height: 100%;
+  background-color: white;
+  flex-direction: column;
+}
+
+.navbar.minimise {
+  width: 3.5rem;
+}
+
+.navbar__minimise {
+  background-image: url("https://app.clockify.me/assets/ui-icons/sidebar-toggler-union-open.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  transform: scaleX(-1);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  position: fixed;
+  background-color: #dadada;
+  border-radius: 0.1rem;
+  justify-content: center;
+  top: 50%;
+  left: 12.5rem;
+  width: 1rem;
+  height: 1rem;
+}
+
+.navbar__minimise.minimise {
+  transform: scaleX(1);
+  left: 3rem;
+}
+
+.navbar__container {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  justify-content: start;
+}
+
+.navbar__section {
+  display: flex;
+  flex-direction: column;
+}
+
+.navbar__section--title {
+  display: flex;
+  align-items: center;
+  padding: 0.4rem 1.3rem;
+  color: #999;
+  font-size: 0.9rem;
+}
+
+.navbar__section--item {
+  height: 3.5rem;
+  justify-content: start;
+  display: flex;
+  padding: 0.2rem;
+  transition: 0.5s linear;
+}
+
+.navbar__section--item:hover {
+  background-color: var(--app-dark-gray);
+  cursor: pointer;
+}
+
+.navbar__section--item {
+  height: 3.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  padding: 0.2rem;
+
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.navbar__section--item::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: var(--app-dark-gray);
+
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+
+  z-index: 0;
+}
+
+.navbar__section--item:hover::before {
+  transform: scaleX(1);
+}
+
+.navbar__section--item > * {
+  position: relative;
+  z-index: 1;
+}
+
+.navbar__item--image {
+  margin: 0rem 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar__item--title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar__item--showmore {
+  display: flex;
+  justify-content: center;
+  color: #999;
+  align-items: center;
+}
+
+.navbar__section--showmore {
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  position: fixed;
+  scrollbar-width: none;
+  left: 13.5rem;
+  height: 100%;
+  overflow-y: scroll;
+  top: 9.6rem;
+  right: 1rem;
+}
+
+.main.expand {
+  left: 4rem;
+}
+
+.main__input {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  top: 5rem;
+  right: 2rem;
+  width: 80%;
+  z-index: 1;
+  background-color: white;
+}
+
+.main__input.expand {
+  right: 2rem;
+  width: 90.2%;
+}
+
+.main__input--task {
+  width: 50%;
+  height: 2.5rem;
+}
+
+.main__input--right {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 45%;
+}
+
+.main__input--right.manual {
+  width: 30%;
+}
+
+.main__input--task.manual {
+  width: 40%;
+}
+
+.main__input--time {
+  height: 2rem;
+  width: 3rem;
+}
+
+.main__tasks {
+  padding-bottom: 30rem;
+}
+
+.main__task--time {
+  border: none;
+  height: 2rem;
+  width: 3rem;
+}
+
+.main__task--time:hover {
+  border: 0.01rem solid;
+}
+
+.subtask .main__task--time {
+  background-color: rgb(233, 248, 255);
+}
+
+.main__input--startbutton {
+  height: 2rem;
+  color: white;
+  border-radius: 0.1rem;
+  border: 0.1rem solid rgb(3, 143, 206);
+  background-color: rgb(3, 169, 244);
+}
+
+.main__input--stopwatch {
+  font-size: 1.1rem;
+  color: rgb(77, 77, 77);
+  font-weight: bold;
+}
+
+.main__input--stopbutton {
+  background-color: rgb(255, 38, 38);
+  border: red;
+}
+
+.main__dashed--border {
+  height: 2rem;
+  border-right: 0.01rem dashed rgb(195, 195, 195);
+}
+
+.main__input--manual {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.main__task--datecontainer {
+  display: flex;
+  justify-content: space-around;
+  width: 12rem;
+  align-items: center;
+}
+
+.main__input--datecontainer {
+  display: flex;
+  justify-content: space-around;
+  width: 15rem;
+  align-items: center;
+}
+
+.main__input--datecontainer.manual {
+  display: none;
+}
+
+.main__input--manualbutton,
+.main__input--timerbutton {
+  background-color: white;
+  border: none;
+}
+
+.main__week {
+  padding: 1rem;
+}
+
+.main__week--title {
+  font-size: 0.9rem;
+  margin-bottom: 0.3rem;
+}
+
+.main__task {
+  border-right: 0.1rem solid var(--app-dark-gray);
+  border-left: 0.1rem solid var(--app-dark-gray);
+  background-color: white;
+  padding: 0.4rem;
+  height: 3rem;
+  display: flex;
+  margin-bottom: 0.1rem;
+  justify-content: space-between;
+}
+
+.main__task:hover {
+  z-index: 10;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.main__task--left {
+  display: flex;
+}
+
+.main__task--input {
+  width: 10rem;
+}
+
+.main__input--task:focus,
+.main__task--input:focus,
+.main__task--time:focus {
+  border: 0.01rem solid #999;
+  outline: none;
+}
+
+.main__task--right {
+  display: flex;
+  width: 50%;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.main__task--count {
+  height: 1.5rem;
+  width: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(233, 248, 255);
+
+  margin-right: 1rem;
+  margin: 1rem;
+  margin-top: 0.8rem;
+  cursor: pointer;
+}
+
+.main__day {
+  border-radius: 0.01rem;
+  margin: 1rem 0rem;
+}
+
+.main__day--title {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.7rem;
+  color: gray;
+  align-items: center;
+  padding: 0.4rem 1rem;
+  background-color: var(--app-dark-gray);
+}
+
+.main__day--bottom {
+  height: 0.4rem;
+  background-color: var(--app-dark-gray);
+}
+
+.main__day--totaltime {
+  font-weight: bold;
+  color: rgb(77, 77, 77);
+  font-size: 1.1rem;
+  margin: 0rem 1rem;
+}
+
+.main__day--right {
+  display: flex;
+  align-items: center;
+}
+
+.main__input--date,
+.main__task--date {
+  border: none;
+  background-color: transparent;
+  background-image: url("https://app.clockify.me/assets/ui-icons/calendar-gray.svg");
+  width: 1.1rem;
+  height: 1.2rem;
+}
+
+.main__input--date::-webkit-calendar-picker-indicator,
+.main__task--date::-webkit-calendar-picker-indicator {
+  opacity: 0;
+}
+
+.main__task--morecontainer {
+  display: none;
+}
+
+.main__task--morecontainer.show {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  position: absolute;
+  left: -4.3rem;
+  background-color: white;
+  height: 6rem;
+  width: 7rem;
+  z-index: 1;
+}
+
+.subtask {
+  background-color: rgb(233, 248, 255);
+}
+
+.subtask.hide {
+  display: none;
+}
+
+.main__task--moreicon {
+  cursor: pointer;
+
+  width: 1rem;
+  position: relative;
+}
+
+.main__task--deletebutton {
+  color: red;
+  background-color: white;
+  border: none;
+  width: 100%;
+  height: 2.5rem;
+}
+
+.main__task--deletebutton:hover {
+  background-color: rgb(232, 232, 232);
+  cursor: pointer;
+}
+
+.main__task--duplicatebutton {
+  background-color: white;
+  width: 100%;
+  height: 2.5rem;
+  border: none;
+}
+
+.main__task--duplicatebutton,
+.main__task--deletebutton {
+  display: flex;
+  align-items: center;
+  padding-left: 1rem;
+}
+
+.main__task--duplicatebutton:hover {
+  background-color: rgb(232, 232, 232);
+  cursor: pointer;
+}
+
+.main--input,
+.main__subtask--input {
+  border: 0.01rem solid transparent;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease;
+}
+
+.main--input:hover,
+.main__subtask--input:hover {
+  border-color: grey;
+}
+
+.main__subtask--input {
+  border: none;
+  background-color: rgb(233, 248, 255);
+}
+
+.display-none {
+  display: none;
+}
